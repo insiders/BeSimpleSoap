@@ -72,7 +72,10 @@ class Curl
             CURLOPT_HEADER => true,
             CURLOPT_USERAGENT => $options['user_agent'],
             CURLINFO_HEADER_OUT => true,
+            CURLOPT_TIMEOUT => 25000,
+            CURLOPT_TIMEOUT_MS => 25000,
         );
+
         curl_setopt_array($this->ch, $curlOptions);
         if (isset($options['compression']) && !($options['compression'] & SOAP_COMPRESSION_ACCEPT)) {
             curl_setopt($this->ch, CURLOPT_ENCODING, 'identity');
@@ -173,6 +176,7 @@ class Curl
         }
         curl_setopt($this->ch, CURLOPT_HEADER, true);
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
+
         $response = curl_exec($this->ch);
         $httpResponseCode = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
         if ($httpResponseCode == 307) {
